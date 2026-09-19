@@ -44,6 +44,7 @@ class Snake:
         self.direction = RIGHT
         #self.next_direction = RIGHT 使用单格缓冲会出现卡连招丢键的情况
         self.pending = [] #通过队列原理，控制长度最大为2保证连招存在，手感丝滑
+        #这个算新版本吧
         self.grow_flag = False
 
     def move(self):
