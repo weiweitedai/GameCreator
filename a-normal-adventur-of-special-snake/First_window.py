@@ -42,9 +42,11 @@ class Snake:
         self.head = (start_x, start_y)
         self.body = [(start_x - i, start_y) for i in range(0, 3)]  # 初始身体长度为3
         self.direction = RIGHT
+        self.next_direction = RIGHT
         self.grow_flag = False
 
     def move(self):
+        self.direction = self.next_direction
         old_head = self.head
         new_head = (old_head[0] + self.direction[0], old_head[1] + self.direction[1])
 
@@ -75,7 +77,7 @@ class Snake:
 
     def change_direction(self, new_direction):
         if (new_direction[0] * -1, new_direction[1] * -1) != self.direction:  #防止180度转向
-            self.direction = new_direction
+            self.next_direction = new_direction
 
 #食物类
 class Food:
@@ -243,11 +245,14 @@ class Game:
 
     #游戏运行
     def run(self):
+        frame = 0
         while True:
             self.handle_events()
-            self.update()
+            if frame % 6 == 0:
+                self.update()
             self.draw()
-            self.clock.tick(10)  
+            self.clock.tick(60)
+            frame += 1  
         
 
 
