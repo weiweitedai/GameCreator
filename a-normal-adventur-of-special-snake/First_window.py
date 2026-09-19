@@ -45,10 +45,12 @@ class Snake:
         #self.next_direction = RIGHT 使用单格缓冲会出现卡连招丢键的情况
         self.pending = [] #通过队列原理，控制长度最大为2保证连招存在，手感丝滑
         #这个算新版本吧
+        self.prev_body = None
         self.grow_flag = False
 
     def move(self):
         self.direction = self.pending.pop(0) if self.pending else self.direction
+        self.prev_body = self.body.copy()
         old_head = self.head
         new_head = (old_head[0] + self.direction[0], old_head[1] + self.direction[1])
 
@@ -170,7 +172,7 @@ class Game:
          for y in range(0,WINDOW_HEIGHT,GRID_SIZE):
               pygame.draw.line(self.screen,WHITE,(0,y),(WINDOW_WIDTH,y))
 
-    def draw(self):
+    def draw(self,t=0):
         #窗口图架绘制
         self.screen.fill(BLACK)
         self.draw_grid()
@@ -183,9 +185,12 @@ class Game:
 
         #绘制蛇
         for i,body_node in enumerate(self.snake.body):
+                prev = self.snake.prev_body[i] if self.snake.prev_body and i < len(self.snake.prev_body) else body_node
+                px = ( prev[0] + (body_node[0] - prev[0]) * t ) * GRID_SIZE
+                py = ( prev[1] + (body_node[1] - prev[1]) * t ) * GRID_SIZE
                 body_rect = pygame.Rect(
-                    body_node[0] * GRID_SIZE + 1,
-                    body_node[1] * GRID_SIZE + 1,
+                    px + 1,
+                    py + 1,
                     GRID_SIZE - 2,
                     GRID_SIZE - 2)
                 color = GREEN if i != 0 else DARK_GREEN
@@ -193,10 +198,10 @@ class Game:
                 pygame.draw.rect(self.screen,color,body_rect,border_radius=5)
                 #绘制蛇的眼睛
                 if i == 0:
-                     x,y = body_node
+
                                     
-                     cx = x * GRID_SIZE + GRID_SIZE // 2
-                     cy = y * GRID_SIZE + GRID_SIZE // 2 
+                     cx = px + GRID_SIZE // 2
+                     cy = py + GRID_SIZE // 2 
                      dx,dy = self.snake.direction
                                     
                      #考虑蛇的运动方向
@@ -255,7 +260,7 @@ class Game:
             self.handle_events()
             if frame % 6 == 0:
                 self.update()
-            self.draw()
+            self.draw((frame % 6) / 6)
             self.clock.tick(60)
             frame += 1  
         
