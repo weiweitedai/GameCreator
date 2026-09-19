@@ -42,11 +42,12 @@ class Snake:
         self.head = (start_x, start_y)
         self.body = [(start_x - i, start_y) for i in range(0, 3)]  # 初始身体长度为3
         self.direction = RIGHT
-        self.next_direction = RIGHT
+        #self.next_direction = RIGHT 使用单格缓冲会出现卡连招丢键的情况
+        self.pending = [] #通过队列原理，控制长度最大为2保证连招存在，手感丝滑
         self.grow_flag = False
 
     def move(self):
-        self.direction = self.next_direction
+        self.direction = self.pending.pop(0) if self.pending else self.direction
         old_head = self.head
         new_head = (old_head[0] + self.direction[0], old_head[1] + self.direction[1])
 
@@ -76,8 +77,12 @@ class Snake:
         self.grow_flag = True
 
     def change_direction(self, new_direction):
-        if (new_direction[0] * -1, new_direction[1] * -1) != self.direction:  #防止180度转向
-            self.next_direction = new_direction
+        last = self.pending[-1] if self.pending else self.direction
+
+        if (new_direction[0] * -1, new_direction[1] * -1) != last and new_direction != last :  #防止180度转向
+            if len(self.pending) < 2:
+                 
+                self.pending.append(new_direction)
 
 #食物类
 class Food:
@@ -213,8 +218,7 @@ class Game:
 
         score_text = self.font.render(f"Score: {self.score}", True, WHITE)
 
-        self.screen.blit(score_text, (10, 10))
-             
+        self.screen.blit(score_text, (10, 10))     
         #绘制游戏结束界面
         if self.game_over:
              overlad = pygame.Surface((WINDOW_WIDTH,WINDOW_HEIGHT))
