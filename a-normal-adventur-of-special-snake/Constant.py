@@ -31,3 +31,7 @@ RIGHT = (1, 0)
 #生成障碍物的数量
 OBSTACLE_COUNT_LOW = 30
 OBSTACLE_COUNT_HIGH = 100
+
+#食物被吃掉后急剧缩小消失的动画帧数（游戏逻辑每秒10帧，6帧约0.6秒）
+FOOD_ANIM_FRAMES = 6
+

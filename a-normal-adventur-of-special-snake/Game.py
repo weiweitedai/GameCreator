@@ -34,13 +34,14 @@ class Game:
         self.obstacles = [Obstacle.Obstacle() for _ in range(random.randint(c.OBSTACLE_COUNT_LOW, c.OBSTACLE_COUNT_HIGH))]
         self.score = 0
         self.game_over = False
+        self.food_anim = None #吞食动画剩余帧数，None表示没有动画
 
-        #确保食物不会生成在蛇
-        while self.food.position in self.snake.body:
-             self.food.randomize_position()
-        #确保障碍物不会生成在蛇和食物身上
-        for obs in self.obstacles:
-                while obs.position in self.snake.body or obs.position == self.food.position:
+        while True:
+                occupied_positions = set(self.snake.body + [self.food.position] + [obs.position for obs in self.obstacles])
+                if len(occupied_positions) == len(self.snake.body) + 1 + len(self.obstacles):
+                    break
+                self.food.randomize_position()
+                for obs in self.obstacles:
                     obs.randomize_position()
         
     def handle_events(self):
@@ -77,13 +78,21 @@ class Game:
              self.game_over = True
              return
 
+        #吞食动画进行中：只推进动画，不判吃也不生成新食物
+        #（此时食物还停在旧格子上、蛇头也还压在上面，不跳过的话会被反复判吃）
+        if self.food_anim is not None:
+             self.food_anim -= 1
+             if self.food_anim == 0:
+                  self.food_anim = None
+                  self.food.randomize_position()
+                  while self.food.position in self.snake.body or self.food.position in [obs.position for obs in self.obstacles]:
+                       self.food.randomize_position()
+             return
+
         if self.food.position == self.snake.head:
              self.snake.grow()
              self.score += 10
-             self.food.randomize_position()
-             while self.food.position in self.snake.body or self.food.position in [obs.position for obs in self.obstacles]:
-                  self.food.randomize_position()
-             #return
+             self.food_anim = c.FOOD_ANIM_FRAMES
 
     
     #游戏界面的绘制渲染
@@ -99,9 +108,14 @@ class Game:
         self.draw_grid()
 
 
-        #绘制食物
-        food_rect = pygame.Rect(self.food.position[0] * c.GRID_SIZE + 2,self.food.position[1] * c.GRID_SIZE + 2,c.GRID_SIZE - 4,c.GRID_SIZE - 4)
-        pygame.draw.rect(self.screen, c.RED, food_rect, border_radius=6)
+        #绘制食物（被吃掉后急剧缩小直至消失：t是插值进度，让缩小过程和蛇身移动一样平滑）
+        if self.food_anim is None:
+             size = c.GRID_SIZE - 4
+        else:
+             size = max(1, int((c.GRID_SIZE - 4) * (self.food_anim - t) / c.FOOD_ANIM_FRAMES))
+        offset = (c.GRID_SIZE - size) // 2 #向格子中心收缩
+        food_rect = pygame.Rect(self.food.position[0] * c.GRID_SIZE + offset,self.food.position[1] * c.GRID_SIZE + offset,size,size)
+        pygame.draw.rect(self.screen, c.RED, food_rect, border_radius=max(1, size * 3 // 8))
 
 
         #绘制蛇
