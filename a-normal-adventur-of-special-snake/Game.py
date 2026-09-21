@@ -46,17 +46,22 @@ class Game:
                     obs.randomize_position()
         
     def handle_events(self):
-        for event in pygame.event.get():
+       for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit() #这段必须书写，是每个Pygame程序想要正常退出所必须的，关闭窗口需要操作系统发出请求，再由程序决定是否要响应，若没有则可能触发系统强制杀程序，留下僵尸进程，窗口无响应但程序继续跑这几种情况
             elif event.type == pygame.KEYDOWN:
                 if self.game_over:
                     if event.key == pygame.K_ESCAPE:
+                        print('ESC pressed!')
                         pygame.quit()
                         sys.exit()
                     if event.key == pygame.K_SPACE:
+                        print('SPACE pressed!')
                         self.reset()
+                    if event.key == pygame.K_LSHIFT:
+                        print('LSHIFT pressed!')
+                        return False
                 else:        
                     if event.key == pygame.K_UP:
                             self.snake.change_direction(c.UP)
@@ -66,6 +71,7 @@ class Game:
                             self.snake.change_direction(c.LEFT)
                     elif event.key == pygame.K_RIGHT:
                             self.snake.change_direction(c.RIGHT)
+       return True 
 
     def update(self):
         if self.game_over:
@@ -194,7 +200,7 @@ class Game:
                 (c.WINDOW_WIDTH // 2, c.WINDOW_HEIGHT // 2 + 20))
              self.screen.blit(score_text,score_rect)
 
-             tip_text = self.font.render("Press SPACE to Restart, ESC to Quit",True,c.WHITE)
+             tip_text = self.font.render("Press SPACE to Restart, ESC to Quit, LSHIFT to Return to Main Page",True,c.WHITE)
              tip_rect = tip_text.get_rect(center=
                 (c.WINDOW_WIDTH // 2, c.WINDOW_HEIGHT // 2 + 60))
              self.screen.blit(tip_text,tip_rect)   
@@ -206,9 +212,10 @@ class Game:
 
     #游戏运行
     def run(self):
+        running = True
         frame = 0
-        while True:
-            self.handle_events()
+        while running:
+            running = self.handle_events()
             if frame % 6 == 0:
                 self.update()
             self.draw((frame % 6) / 6)

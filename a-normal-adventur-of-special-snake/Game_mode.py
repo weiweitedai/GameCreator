@@ -34,7 +34,10 @@ def handle_events(rect_Mode1, rect_Mode2, rect_Mode3):
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                return False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:  # 左键点击
                 mouse_pos = pygame.mouse.get_pos()
                 mode = None
@@ -49,9 +52,13 @@ def handle_events(rect_Mode1, rect_Mode2, rect_Mode3):
                     mode = Game.c.Hard_mode
                 if mode is not None:
                     apply_mode(mode)
+    return True
 
 
 def run():
+    
+    running = True
+    
     mode_page = pygame.display.set_mode((Game.c.WINDOW_WIDTH, Game.c.WINDOW_HEIGHT))
     pygame.display.set_caption("Snake Game For Choosing Specific Mode")
     clock = pygame.time.Clock()
@@ -68,8 +75,9 @@ def run():
     rect_Mode3 = pygame.Rect(Game.c.WINDOW_WIDTH // 2 - Mode3_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 + 150 - Mode3_text.get_height() // 2, Mode3_text.get_width(), Mode3_text.get_height())
     
     
+    
     #事件处理
-    while True:
-        handle_events(rect_Mode1, rect_Mode2, rect_Mode3)
+    while running:
+        running = handle_events(rect_Mode1, rect_Mode2, rect_Mode3)
         draw(mode_page, Mode_text, Mode1_text, Mode2_text, Mode3_text)
         clock.tick(60)  # 控制帧率为60FPS
