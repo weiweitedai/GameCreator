@@ -1,5 +1,5 @@
 import Constant as c
-import Game
+
 #蛇类
 class Snake:
     def __init__(self):

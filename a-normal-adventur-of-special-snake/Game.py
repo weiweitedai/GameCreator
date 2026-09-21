@@ -8,8 +8,9 @@ import random
 #初始化Pygame
 pygame.init()
 
+  
 def load_font(size,bold=False):
-    path = "C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf"
+    path = "C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf" 
     try:
 
         return pygame.font.Font(path, size)
@@ -23,7 +24,6 @@ class Game:
         self.screen = pygame.display.set_mode((c.WINDOW_WIDTH, c.WINDOW_HEIGHT))
         pygame.display.set_caption("Snake Game")
         self.clock = pygame.time.Clock()
-        #
         self.font = load_font(24)
         self.big_font = load_font(48)
         self.reset()
@@ -32,6 +32,7 @@ class Game:
         self.snake = Snake.Snake()
         self.food = Food.Food()
         self.obstacles = [Obstacle.Obstacle() for _ in range(random.randint(c.OBSTACLE_COUNT_LOW, c.OBSTACLE_COUNT_HIGH))]
+        print(f"当前障碍物范围: {c.OBSTACLE_COUNT_LOW} ~ {c.OBSTACLE_COUNT_HIGH}, 本次生成: {len(self.obstacles)} 个") #验证属性值是否被模式选择修改，调试完可删除
         self.score = 0
         self.game_over = False
         self.food_anim = None #吞食动画剩余帧数，None表示没有动画

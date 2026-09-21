@@ -1,3 +1,5 @@
 {
-    "python.REPL.enableREPLSmartSend": false
+    "python.REPL.enableREPLSmartSend": false,
+
+    "python.defaultInterpreterPath": "D:\\Github\\GameCreator\\.venv\\Scripts\\Python.exe"
 }
