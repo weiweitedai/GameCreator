@@ -11,6 +11,13 @@ def draw(music_page,Music_dict,Music_playing_text,play_rect):
     # 绘制音乐播放页面
     music_page.fill(Game.c.BLACK)  # 设置背景颜色为黑色
     
+    #UI界面绘制
+    
+    #背景
+    img_path = "D:\\Github\\Sources\\img_collections\\Sakura_love(1).jpeg"
+    background_img = pygame.image.load(img_path)
+    music_page.blit(background_img,(0,0))
+    
     for render,rect in Music_dict:
         music_page.blit(render,rect)
     music_page.blit(Music_playing_text,play_rect)
@@ -71,7 +78,7 @@ def run():
     render_list = []
     origin = - 30
     for music in music_files.keys():
-        music_text = pygame.font.Font(None,48).render(music,True,Game.c.WHITE)
+        music_text = pygame.font.Font(None,48).render(music,True,Game.c.PURPLE)
         render_list.append(music_text)
         music_rect = music_text.get_rect(center=(Game.c.WINDOW_WIDTH // 2, Game.c.WINDOW_HEIGHT // 2 + origin - 200))
         Music_rect_list.append(music_rect)

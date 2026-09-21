@@ -9,7 +9,15 @@ pygame.init()
 
 def draw(mode_page,Mode_text, Mode1_text, Mode2_text, Mode3_text):
     #界面绘制
+        
         mode_page.fill(Game.c.GREEN)
+        
+        #UI界面绘制
+        
+        #背景绘制
+        img_path = "D:\\Github\\Sources\\img_collections\\Cute_girls(1).jpg"
+        background_img = pygame.image.load(img_path)
+        mode_page.blit(background_img,(0,0))
         #文字渲染
         mode_page.blit(Mode_text, (Game.c.WINDOW_WIDTH // 2 - Mode_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 - 150 - Mode_text.get_height() // 2))
     
@@ -65,13 +73,13 @@ def run():
     
     #引入字体
     path = r"D:\Github\Sources\font_collections\MYuppy\myuppygb-medium.ttf"
-    Mode_text = pygame.font.Font(path, 72).render("Mode Choose", True, Game.c.WHITE)
+    Mode_text = pygame.font.Font(path, 72).render("Mode Choose", True, Game.c.RED)
         
-    Mode1_text = pygame.font.Font(None, 64).render("Easy Mode", True, Game.c.WHITE)
+    Mode1_text = pygame.font.Font(None, 64).render("Easy Mode", True, Game.c.RED)
     rect_Mode1 = pygame.Rect(Game.c.WINDOW_WIDTH // 2 - Mode1_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 - 50 - Mode1_text.get_height() // 2, Mode1_text.get_width(), Mode1_text.get_height())
-    Mode2_text = pygame.font.Font(None, 64).render("Normal Mode", True, Game.c.WHITE)
+    Mode2_text = pygame.font.Font(None, 64).render("Normal Mode", True, Game.c.RED)
     rect_Mode2 = pygame.Rect(Game.c.WINDOW_WIDTH // 2 - Mode2_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 + 50 - Mode2_text.get_height() // 2, Mode2_text.get_width(), Mode2_text.get_height())
-    Mode3_text = pygame.font.Font(None, 64).render("Hard Mode", True, Game.c.WHITE)
+    Mode3_text = pygame.font.Font(None, 64).render("Hard Mode", True, Game.c.RED)
     rect_Mode3 = pygame.Rect(Game.c.WINDOW_WIDTH // 2 - Mode3_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 + 150 - Mode3_text.get_height() // 2, Mode3_text.get_width(), Mode3_text.get_height())
     
     

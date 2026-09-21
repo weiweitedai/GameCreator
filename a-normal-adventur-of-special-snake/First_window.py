@@ -11,9 +11,19 @@ def draw_button(surface, text, font, color, rect,path=None):
     surface.blit(Text_text, (Game.c.WINDOW_WIDTH //2 - Text_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 - Text_text.get_height() // 2))
 '''
 
+
+
 def draw(option_page,GameTopic_text, GameStart_button_text, GameMode_button_text, MusicPlay_button_text):
     #界面绘制
         option_page.fill(Game.c.PURPLE)
+        
+        #UI界面绘制
+        
+        #背景图片添加
+        img_source = "D:\\Github\\Sources\\img_collections\\Steedy_snake(1).jpg"
+        background = pygame.image.load(img_source)
+        option_page.blit(background,(0,0))        
+        
         #文字渲染
         option_page.blit(GameTopic_text, (Game.c.WINDOW_WIDTH // 2 - GameTopic_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 - 150 - GameTopic_text.get_height() // 2))
     
@@ -55,13 +65,13 @@ if __name__ == "__main__":
 
     #引入字体
     path = r"D:\Github\Sources\font_collections\MYuppy\myuppygb-medium.ttf"
-    GameTopic_text = pygame.font.Font(path, 72).render("Snake Game", True, Game.c.WHITE)
+    GameTopic_text = pygame.font.Font(path, 72).render("Snake Game", True, Game.c.GREEN)
     
-    GameStart_button_text = pygame.font.Font(None, 64).render("Start Game", True, Game.c.WHITE)
+    GameStart_button_text = pygame.font.Font(None, 64).render("Start Game", True, Game.c.DARK_GREEN)
     rect_GameStart = pygame.Rect(Game.c.WINDOW_WIDTH // 2 - GameStart_button_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 - 50 - GameStart_button_text.get_height() // 2, GameStart_button_text.get_width(), GameStart_button_text.get_height())
-    GameMode_button_text = pygame.font.Font(None, 64).render("Choose Game Mode", True, Game.c.WHITE)
+    GameMode_button_text = pygame.font.Font(None, 64).render("Choose Game Mode", True, Game.c.DARK_GREEN)
     rect_GameMode = pygame.Rect(Game.c.WINDOW_WIDTH // 2 - GameMode_button_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 + 50 - GameMode_button_text.get_height() // 2, GameMode_button_text.get_width(), GameMode_button_text.get_height())
-    MusicPlay_button_text = pygame.font.Font(None, 64).render("Play Music", True, Game.c.WHITE)
+    MusicPlay_button_text = pygame.font.Font(None, 64).render("Play Music", True, Game.c.DARK_GREEN)
     rect_MusicPlay = pygame.Rect(Game.c.WINDOW_WIDTH // 2 - MusicPlay_button_text.get_width() // 2, Game.c.WINDOW_HEIGHT // 2 + 150 - MusicPlay_button_text.get_height() // 2, MusicPlay_button_text.get_width(), MusicPlay_button_text.get_height())
 
 
