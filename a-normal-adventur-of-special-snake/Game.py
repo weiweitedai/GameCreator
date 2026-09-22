@@ -172,16 +172,17 @@ class Game:
 
                      pygame.draw.circle(self.screen,c.RED,eye1,eye_radius)
                      pygame.draw.circle(self.screen,c.RED,eye2,eye_radius) 
-        #绘制分数
-
-        score_text = self.font.render(f"Score: {self.score}", True, c.WHITE)
-
-        self.screen.blit(score_text, (10, 10)) 
-
+        
         #绘制障碍物
         for obs in self.obstacles:
              obs_rect = pygame.Rect(obs.position[0] * c.GRID_SIZE, obs.position[1] * c.GRID_SIZE, c.GRID_SIZE , c.GRID_SIZE)
-             pygame.draw.rect(self.screen, c.BLUE, obs_rect, border_radius=4)    
+             pygame.draw.rect(self.screen, c.BLUE, obs_rect, border_radius=4) 
+             
+        #绘制分数
+     
+        score_text = self.font.render(f"Score: {self.score}", True, c.WHITE)
+     
+        self.screen.blit(score_text, (10, 10))    
         #绘制游戏结束界面
         if self.game_over:
              overlad = pygame.Surface((c.WINDOW_WIDTH,c.WINDOW_HEIGHT))
