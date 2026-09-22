@@ -1,6 +1,12 @@
 import pygame
 import sys
+import os
 import Game
+
+#图片目录:项目根下的 img_collections,基于脚本位置定位,不依赖运行目录
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "img_collections")
+#音乐目录：同上
+SND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "snd_collections")
 
 #初始化pygame
 pygame.init()
@@ -14,7 +20,7 @@ def draw(music_page,Music_dict,Music_playing_text,play_rect):
     #UI界面绘制
     
     #背景
-    img_path = "D:\\Github\\Sources\\img_collections\\Sakura_love(1).jpeg"
+    img_path = os.path.join(IMG_DIR, "Sakura_love(1).jpeg")
     background_img = pygame.image.load(img_path)
     music_page.blit(background_img,(0,0))
     
@@ -62,10 +68,10 @@ def run():
     clock = pygame.time.Clock()
     
     #提供音乐文件播放路径
-    One_last_kiss_path = r"D:\Github\Sources\snd_collections\One_last_kiss.mp3"  
-    Forest_path = r"D:\Github\Sources\snd_collections\forest.ogg"
-    Cave_path = r"D:\Github\Sources\snd_collections\cave themeb4.ogg"
-    B423b42_path = r"D:\Github\Sources\snd_collections\b423b42.wav"
+    One_last_kiss_path = os.path.join(SND_DIR,'One_last_kiss.mp3')
+    Forest_path = os.path.join(SND_DIR,'forest.ogg')
+    Cave_path = os.path.join(SND_DIR,'cave themeb4.ogg')
+    B423b42_path = os.path.join(SND_DIR,'b423b42.wav')
 
     music_files = {
         "One Last Kiss": One_last_kiss_path,

@@ -1,6 +1,10 @@
 import pygame
 import sys
+import os
 import Game
+
+#图片目录:项目根下的 img_collections,基于脚本位置定位,不依赖运行目录
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "img_collections")
 
 
 
@@ -15,7 +19,7 @@ def draw(mode_page,Mode_text, Mode1_text, Mode2_text, Mode3_text):
         #UI界面绘制
         
         #背景绘制
-        img_path = "D:\\Github\\Sources\\img_collections\\Cute_girls(1).jpg"
+        img_path = os.path.join(IMG_DIR, "Cute_girls(1).jpg")
         background_img = pygame.image.load(img_path)
         mode_page.blit(background_img,(0,0))
         #文字渲染

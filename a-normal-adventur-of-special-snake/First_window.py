@@ -1,8 +1,12 @@
 import Game
 import pygame
 import sys
+import os
 import Music_play
 import Game_mode
+
+#图片目录:项目根下的 img_collections,基于脚本位置定位,不依赖运行目录
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "img_collections")
 
 
 '''
@@ -20,7 +24,7 @@ def draw(option_page,GameTopic_text, GameStart_button_text, GameMode_button_text
         #UI界面绘制
         
         #背景图片添加
-        img_source = "D:\\Github\\Sources\\img_collections\\Steedy_snake(1).jpg"
+        img_source = os.path.join(IMG_DIR, "Steedy_snake(1).jpg")
         background = pygame.image.load(img_source)
         option_page.blit(background,(0,0))        
         
